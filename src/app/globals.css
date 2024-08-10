@@ -46,7 +46,15 @@ body::before {
 }
 
 .gradient-outline{
-  border: 2px solid transparent;
+  border: 1px solid transparent;
+  border-image: linear-gradient(to right, #9068c1, #3892db) 1;
+}
+.gradient-right{
+  border-right: 1px solid transparent;
+  border-image: linear-gradient(to right, #9068c1, #3892db) 1;
+}
+.gradient-left{
+  border-left: 1px solid transparent;
   border-image: linear-gradient(to right, #9068c1, #3892db) 1;
 }
 
