@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Layout, Hero, HowToPlay, MovieMania, AboutUs, Newsletter, Footer } from "@/Components";
+import { Layout, Hero, HowToPlay, MovieMania, AboutUs, Newsletter, Footer } from "@/Components/landing";
 
 
 export default function Home() {
