@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 // images
-import logo from "../../public/Logo.png";
-import FilledButton from "./Buttons/FIlledButton";
-import TextButton from "./Buttons/TextButton";
-import OutlinedButton from "./Buttons/OutlinedButton";
+import logo from "../../../public/Logo.png";
+import FilledButton from "../Buttons/FIlledButton";
+import TextButton from "../Buttons/TextButton";
+import OutlinedButton from "../Buttons/OutlinedButton";
 import { HiMenu } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
 
@@ -29,7 +30,10 @@ const Navbar = () => {
           <FilledButton text="Create a game" />
         </li>
       </ul>
-      <button className="lg:hidden block" onClick={()=>setShowMenu(!showMenu)}>
+      <button
+        className="lg:hidden block"
+        onClick={() => setShowMenu(!showMenu)}
+      >
         {!showMenu ? (
           <HiMenu size={25} color="#fefefe" />
         ) : (
@@ -49,7 +53,9 @@ const Navbar = () => {
               <OutlinedButton text="Join a game" />
             </li>
             <li>
-              <FilledButton text="Create a game" />
+              <Link href={'/create-a-game'}>
+                <FilledButton text="Create a game" />
+              </Link>
             </li>
           </ul>
         </div>

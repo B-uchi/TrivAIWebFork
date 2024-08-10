@@ -1,8 +1,8 @@
 import Image from "next/image"
-import howToPlayImg1 from '../assets/how_to_play_img1.png'
-import howToPlayImg2 from '../assets/how_to_play_img2.png'
-import howToPlayImg3 from '../assets/how_to_play_img3.png'
-import howToPlayImg4 from '../assets/how_to_play_img4.png'
+import howToPlayImg1 from '../../assets/how_to_play_img1.png'
+import howToPlayImg2 from '../../assets/how_to_play_img2.png'
+import howToPlayImg3 from '../../assets/how_to_play_img3.png'
+import howToPlayImg4 from '../../assets/how_to_play_img4.png'
 
 
 const ImagePalette = () => {

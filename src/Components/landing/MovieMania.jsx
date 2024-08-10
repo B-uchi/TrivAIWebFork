@@ -1,10 +1,10 @@
 import React from "react";
-import FilledButton from "./Buttons/FIlledButton";
+import FilledButton from "../Buttons/FIlledButton";
 import Image from "next/image";
-import movieManiaImage from "../assets/movie_mania_bg.png";
+import movieManiaImage from "../../assets/movie_mania_bg.png";
 
 // images
-import playButton from "../assets/Play.png";
+import playButton from "../../assets/Play.png";
 
 const MovieMania = () => {
   return (

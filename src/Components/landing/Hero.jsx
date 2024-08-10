@@ -1,8 +1,8 @@
 import Image from "next/image";
-import heroImage from "../assets/hero_abstract_bg.png";
-import FilledButton from "./Buttons/FIlledButton";
-import OutlinedButton from "./Buttons/OutlinedButton";
-import browserDark from "../assets/browser_dark.png";
+import heroImage from "../../assets/hero_abstract_bg.png";
+import FilledButton from "../Buttons/FIlledButton";
+import OutlinedButton from "../Buttons/OutlinedButton";
+import browserDark from "../../assets/browser_dark.png";
 
 const Hero = () => {
   return (

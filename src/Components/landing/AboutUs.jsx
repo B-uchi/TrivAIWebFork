@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
 
-import img from "../assets/Funny.png";
-import FilledButton from "./Buttons/FIlledButton";
+import img from "../../assets/Funny.png";
+import FilledButton from "../Buttons/FIlledButton";
 
 const AboutUs = () => {
   return (

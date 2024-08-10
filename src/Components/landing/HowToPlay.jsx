@@ -1,5 +1,5 @@
 import React from "react";
-import FilledButton from "./Buttons/FIlledButton";
+import FilledButton from "../Buttons/FIlledButton";
 import ImagePalette from "./ImagePalette";
 
 const HowToPlay = () => {
