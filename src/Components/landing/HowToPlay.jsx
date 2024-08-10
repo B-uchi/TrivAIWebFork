@@ -30,7 +30,7 @@ const HowToPlay = () => {
           playing.
         </p>
         <div className="flex">
-          <FilledButton text={"Join Now"} />
+          <FilledButton text={"Join Now"} link={'/'}/>
         </div>
       </div>
       <div className="lg:w-[40%] h-[300px] flex justify-center items-center">

@@ -34,7 +34,7 @@ const AboutUs = () => {
           started? Join the fun!
         </p>
         <div className="w-full">
-          <FilledButton text={"Read More"} />
+          <FilledButton text={"Read More"} link={'/'}/>
         </div>
       </div>
     </div>

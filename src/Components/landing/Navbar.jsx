@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 // images
 import logo from "../../../public/Logo.png";
@@ -27,7 +26,7 @@ const Navbar = () => {
           <OutlinedButton text="Join a game" />
         </li>
         <li>
-          <FilledButton text="Create a game" />
+          <FilledButton text="Create a game" link={'/create-a-game'}/>
         </li>
       </ul>
       <button
@@ -50,12 +49,10 @@ const Navbar = () => {
               <TextButton text={"About Us"} />
             </li>
             <li>
-              <OutlinedButton text="Join a game" />
+              <OutlinedButton text="Join a game" link={'/'} />
             </li>
             <li>
-              <Link href={'/create-a-game'}>
-                <FilledButton text="Create a game" />
-              </Link>
+              <FilledButton text={"Create a game"} link={'/create-a-game'}/>
             </li>
           </ul>
         </div>

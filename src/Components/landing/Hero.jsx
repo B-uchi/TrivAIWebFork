@@ -28,8 +28,8 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex w-full justify-center gap-[20px]">
-          <FilledButton text={"Play Now"} />
-          <OutlinedButton text={"Learn More"} />
+          <FilledButton text={"Play Now"} link={'/'}/>
+          <OutlinedButton text={"Learn More"} link={'/'}/>
         </div>
       </div>
 
