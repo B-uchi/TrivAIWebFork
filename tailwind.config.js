@@ -10,6 +10,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'nunito': ["Nunito", 'sans-serif'],
+        'fredoka': ["Fredoka", 'sans-serif'],
+        'poppins': ["Poppins", 'sans-serif'],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
