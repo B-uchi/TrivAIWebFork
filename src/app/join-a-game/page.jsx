@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 const JoinGame = () => {
   const [gameId, setGameId] = useState("");
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
   const joinGame = () => {
     setLoading(true)
@@ -47,7 +47,7 @@ const JoinGame = () => {
             </div>
             <button
               onClick={() => joinGame()}
-              className="font-[700] rounded-[10px] font-nunito text-[18px] text-[#fefefe] bg-custom p-[10px] lg:p-[20px] fles items-center justify-center gap-5"
+              className="font-[700] rounded-[10px] font-nunito text-[18px] text-[#fefefe] bg-custom p-[10px] lg:p-[20px] flex items-center justify-center gap-3"
             >
               Join Game {loading && <div className="loader"></div>}
             </button>
