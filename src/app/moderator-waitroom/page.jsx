@@ -13,6 +13,7 @@ const ModeratorWaitroom = () => {
   const [joinText, setJoinText] = useState("");
   const [username, setUsername] = useState("");
   const [room_Id, setRoomId] = useState("");
+  const [moderatorToken, setModeratorToken] = useState("")
   const router = useRouter();
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const ModeratorWaitroom = () => {
       
       setIsModerator(true);
       setRoomId(room_id)
+      setModeratorToken(moderator_token)
       const socket = new WebSocket(
         `wss://trivai-backend.onrender.com/waitroom/${room_id}`
       );
@@ -78,35 +80,34 @@ const ModeratorWaitroom = () => {
 
 
   const startGame = async () => {
-    // setLoading(true);
-    // try {
-    //   const request = await fetch(
-    //     `https://trivai-backend.onrender.com/game/${room_id}/start`,
-    //     {
-    //       method: "POST",
-    //       body: JSON.stringify({ moderator_token: moderator_token }),
-    //       headers: {
-    //         X_API_Token: process.env.NEXT_PUBLIC_API_KEY,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
+    setLoading(true);
+    try {
+      const request = await fetch(
+        `https://trivai-backend.onrender.com/game/${room_Id}/start`,
+        {
+          method: "POST",
+          body: JSON.stringify({ moderator_token: moderatorToken }),
+          headers: {
+            X_API_Token: process.env.NEXT_PUBLIC_API_KEY,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    //   const data = await request.json();
-    //   if (request.status == 200) {
-    //     setLoading(false);
-    //     toast.success("Game started");
-    //     setTimeout(() => router.push("/gameroom"), 1000);
-    //   } else {
-    //     setLoading(false);
-    //     toast.error("An error occured");
-    //   }
-    // } catch (error) {
-    //   setLoading(false);
-    //   toast.error("Request incomplete");
-    //   console.log("Error: ", error);
-    // }
-    toast.error("Not functional");
+      const data = await request.json();
+      if (request.status == 200) {
+        setLoading(false);
+        toast.success("Game started");
+        setTimeout(() => router.push("/gameroom"), 1000);
+      } else {
+        setLoading(false);
+        toast.error("An error occured");
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Request incomplete");
+      console.log("Error: ", error);
+    }
   };
 
   const copyToClipboard = () => {
