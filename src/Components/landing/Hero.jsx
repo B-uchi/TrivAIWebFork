@@ -28,7 +28,7 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex w-full justify-center gap-[20px]">
-          <FilledButton text={"Play Now"} link={'/'}/>
+          <FilledButton text={"Play Now"} link={'/create-a-game'}/>
           <OutlinedButton text={"Learn More"} link={'/'}/>
         </div>
       </div>

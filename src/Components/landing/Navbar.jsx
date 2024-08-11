@@ -23,7 +23,7 @@ const Navbar = () => {
           <TextButton text={"About Us"} />
         </li>
         <li>
-          <OutlinedButton text="Join a game" />
+          <OutlinedButton text="Join a game" link={'/join-a-game'}/>
         </li>
         <li>
           <FilledButton text="Create a game" link={'/create-a-game'}/>
