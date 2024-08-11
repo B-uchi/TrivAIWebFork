@@ -52,11 +52,6 @@ const GameRoom = () => {
         return router.push("/join-a-game");
       }
 
-      if (sessionStorage.getItem("leaderboard")){
-        toast("Action unavailable");
-        console.log("Game already completed");
-        return router.push("/gameroom/leaderboard");
-      }
 
       setModeratorToken(sessionStorage.getItem("moderator_token"));
       const socket = new WebSocket(
