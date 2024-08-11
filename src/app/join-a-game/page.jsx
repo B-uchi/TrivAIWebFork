@@ -6,12 +6,15 @@ import { toast } from "sonner";
 
 const JoinGame = () => {
   const [gameId, setGameId] = useState("");
+  const [loading, setLoading] = useState(true)
   const router = useRouter();
   const joinGame = () => {
+    setLoading(true)
     if (!gameId){
       return toast.error("Game id is required")
     }
     router.push(`/waitroom/${gameId}`);
+    setLoading(false)
   };
 
   return (
@@ -44,9 +47,9 @@ const JoinGame = () => {
             </div>
             <button
               onClick={() => joinGame()}
-              className="font-[700] rounded-[10px] font-nunito text-[18px] text-[#fefefe] bg-custom p-[10px] lg:p-[20px]"
+              className="font-[700] rounded-[10px] font-nunito text-[18px] text-[#fefefe] bg-custom p-[10px] lg:p-[20px] fles items-center justify-center gap-5"
             >
-              Join Game
+              Join Game {loading && <div className="loader"></div>}
             </button>
           </div>
         </div>
