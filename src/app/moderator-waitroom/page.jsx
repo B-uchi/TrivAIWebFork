@@ -12,11 +12,15 @@ const ModeratorWaitroom = () => {
   const [users, setUsers] = useState([]);
   const [joinText, setJoinText] = useState("");
   const [username, setUsername] = useState("");
-  const room_id = sessionStorage.getItem("room_id");
-  const moderator_token = sessionStorage.getItem("moderator_token");
+  const [room_id, setRoomId] = useState("");
+  const [moderator_token, setModeratorToken] = useState("");
   const router = useRouter();
 
   useEffect(() => {
+    if (typeof sessionStorage !== 'undefined') {
+      setRoomId(sessionStorage.getItem("room_id"));
+      setModeratorToken(sessionStorage.getItem("moderator_token"));
+    }
     if (!moderator_token) {
       toast("You are not a moderator");
       router.push("/join-a-game");
@@ -31,7 +35,9 @@ const ModeratorWaitroom = () => {
         if (data.current_user) {
           setJoinText(`You joined`);
           setUsername(data.current_user);
-          sessionStorage.setItem("username", data.current_user)
+          if (window) {
+            sessionStorage.setItem("username", data.current_user);
+          }
         }
 
         if (data.action === "join_room") {
@@ -95,7 +101,7 @@ const ModeratorWaitroom = () => {
     //   toast.error("Request incomplete");
     //   console.log("Error: ", error);
     // }
-    toast.error("Not functional")
+    toast.error("Not functional");
   };
 
   const copyToClipboard = () => {

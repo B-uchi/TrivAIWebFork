@@ -9,13 +9,16 @@ const Waitroom = () => {
   const [isValidId, setIsValidId] = useState(false);
   const [verifyingId, setVerifyingId] = useState(true);
   const [users, setUsers] = useState([]);
+  const [moderator_token, setModeratorToken] = useState("");
   const [joinText, setJoinText] = useState("");
   const [username, setUsername] = useState("");
   const router = useRouter();
   const { gameId } = useParams();
 
   useEffect(() => {
-    const moderator_token = sessionStorage.getItem("moderator_token");
+    if (typeof sessionStorage !== undefined) {
+      setModeratorToken(sessionStorage.getItem("moderator_token"));
+    }
     if (moderator_token) {
       toast("You are a moderator");
       router.push("/moderator-waitroom");
@@ -39,7 +42,9 @@ const Waitroom = () => {
         setIsValidId(true);
 
         if (data.action == "start_game") {
-          sessionStorage.setItem("room_id", gameId)
+          if (window) {
+            sessionStorage.setItem("room_id", gameId);
+          }
           toast.success("Game started");
           setTimeout(() => router.push("/gameroom"), 1000);
         }
@@ -48,7 +53,9 @@ const Waitroom = () => {
           toast.success("Game joined successfully");
           setJoinText(`You joined`);
           setUsername(data.current_user);
-          sessionStorage.setItem("username", data.current_user);
+          if (window) {
+            sessionStorage.setItem("username", data.current_user);
+          }
         }
 
         if (data.action === "join_room") {
