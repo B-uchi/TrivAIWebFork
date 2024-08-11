@@ -12,20 +12,23 @@ const ModeratorWaitroom = () => {
   const [users, setUsers] = useState([]);
   const [joinText, setJoinText] = useState("");
   const [username, setUsername] = useState("");
-  const [room_id, setRoomId] = useState("");
-  const [moderator_token, setModeratorToken] = useState("");
+  const [room_Id, setRoomId] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof sessionStorage !== 'undefined') {
-      setRoomId(sessionStorage.getItem("room_id"));
-      setModeratorToken(sessionStorage.getItem("moderator_token"));
-    }
-    if (!moderator_token) {
-      toast("You are not a moderator");
-      router.push("/join-a-game");
-    } else {
+    if (typeof sessionStorage !== "undefined") {
+      const room_id = sessionStorage.getItem("room_id");
+      const moderator_token = sessionStorage.getItem("moderator_token");
+
+      
+      if (!moderator_token) {
+        toast("You are not a moderator");
+        router.push("/join-a-game");
+        return;
+      }
+      
       setIsModerator(true);
+      setRoomId(room_id)
       const socket = new WebSocket(
         `wss://trivai-backend.onrender.com/waitroom/${room_id}`
       );
@@ -72,6 +75,8 @@ const ModeratorWaitroom = () => {
     }
   }, [router]);
 
+
+
   const startGame = async () => {
     // setLoading(true);
     // try {
@@ -105,7 +110,7 @@ const ModeratorWaitroom = () => {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(room_id);
+    navigator.clipboard.writeText(room_Id);
     toast("Copied to clipboard!");
   };
 
@@ -126,7 +131,7 @@ const ModeratorWaitroom = () => {
           <div className="flex flex-col gap-[10px]">
             <div className="flex justify-center items-center gap-5">
               <p className="font-fredoka font-[600] gradient-text lg:text-[50px] text-[30px] text-center">
-                Game Room Id: {room_id}
+                Game Room Id: {room_Id}
               </p>
               <button
                 onClick={() => {
