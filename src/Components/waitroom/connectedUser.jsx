@@ -18,12 +18,12 @@ const ConnectedUser = ({ name, username }) => {
           style={{ backgroundColor: color }}
           className="h-[147px] w-[142px] rounded-full flex justify-center items-center"
         >
-          <h1 className="font-nunito font-[800] text-[40px] ">{name[0]}</h1>
+          <h1 className="font-nunito font-[800] text-[40px] ">
+            {name[0].toUpperCase()}
+          </h1>
         </div>
         <div className="font-[600] font-fredoka text-[20px] text-center">
-          <p className="gradient-text">
-            {name}
-          </p>
+          <p className="gradient-text">{name}</p>
           <p className="gradient-text">{username == name ? "(You)" : null}</p>
         </div>
       </div>
