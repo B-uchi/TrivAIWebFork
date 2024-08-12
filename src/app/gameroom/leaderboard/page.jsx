@@ -10,14 +10,16 @@ const Leaderboard = () => {
   useEffect(() => {
     if (typeof sessionStorage !== undefined) {
       const leaderboardd = JSON.parse(sessionStorage.getItem("leaderboard"));
-      const current_userr = JSON.parse(sessionStorage.getItem("current_user"));
+      const current_userr = sessionStorage.getItem("username");
       setLeaderboard(leaderboardd);
       setCurrentUser(current_userr);
-      return () => {
-        sessionStorage.removeItem("username");
-      };
+      console.log(current_userr)
+      // return () => {
+      //   sessionStorage.removeItem("username");
+      // };
     }
   }, [router]);
+
 
   return (
     <Layout>

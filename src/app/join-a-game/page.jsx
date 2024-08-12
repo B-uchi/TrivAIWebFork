@@ -6,15 +6,21 @@ import { toast } from "sonner";
 
 const JoinGame = () => {
   const [gameId, setGameId] = useState("");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const joinGame = () => {
-    setLoading(true)
-    if (!gameId){
-      return toast.error("Game id is required")
+
+  if (typeof sessionStorage !== undefined) {
+    sessionStorage.clear();
+  }
+  
+  const joinGame = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (!gameId) {
+      return toast.error("Game id is required");
     }
     router.push(`/waitroom/${gameId}`);
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
@@ -32,7 +38,10 @@ const JoinGame = () => {
           <h2 className="font-fredoka font-[500] text-[20px] lg:text-[25px] gradient-text text-center">
             Game Details
           </h2>
-          <div className="mt-10 flex flex-col gap-[30px]">
+          <form
+            className="mt-10 flex flex-col gap-[30px]"
+            onSubmit={(e) => joinGame(e)}
+          >
             <div className="flex flex-col gap-[8px]">
               <p className="lg:text-[18px] font-poppins font-[500] text-[#fefefe]">
                 Game Id
@@ -46,12 +55,13 @@ const JoinGame = () => {
               />
             </div>
             <button
-              onClick={() => joinGame()}
+              type="submit"
+              onClick={(e) => joinGame(e)}
               className="font-[700] rounded-[10px] font-nunito text-[18px] text-[#fefefe] bg-custom p-[10px] lg:p-[20px] flex items-center justify-center gap-3"
             >
               Join Game {loading && <div className="loader"></div>}
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </Layout>

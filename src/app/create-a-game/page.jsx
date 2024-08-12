@@ -12,13 +12,18 @@ const CreateGame = () => {
   const [noOfQuestions, setNoOfQuestions] = useState(1);
   const [category, setCategory] = useState("selectCategory");
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
-  const createGame = async () => {
+  if (typeof sessionStorage !== undefined) {
+    sessionStorage.clear();
+  }
+
+  const createGame = async (e) => {
+    e.preventDefault();
     setLoading(true);
     if (category == "selectCategory") {
       setLoading(false);
-      return toast("Please select a valid category.")
+      return toast("Please select a valid category.");
     } else {
       try {
         const request = await fetch(
@@ -39,10 +44,10 @@ const CreateGame = () => {
           setLoading(false);
           const data = await request.json();
           toast.success("Game created successfully");
-          sessionStorage.clear()
+          sessionStorage.clear();
           sessionStorage.setItem("room_id", data.room_id);
           sessionStorage.setItem("moderator_token", data.moderator_token);
-          router.push('/moderator-waitroom')
+          router.push("/moderator-waitroom");
         } else {
           setLoading(false);
           return toast.error("An error occured.");
@@ -69,7 +74,10 @@ const CreateGame = () => {
           <h2 className="font-fredoka font-[500] text-[20px] lg:text-[25px] gradient-text text-center">
             Game Details
           </h2>
-          <div className="mt-10 flex flex-col gap-[30px]">
+          <form
+            className="mt-10 flex flex-col gap-[30px]"
+            onSubmit={(e) => createGame(e)}
+          >
             <div className="flex flex-col gap-[8px]">
               <p className="lg:text-[18px] font-poppins font-[500] text-[#fefefe]">
                 Category
@@ -97,6 +105,7 @@ const CreateGame = () => {
                 </p>
                 <div className="w-full lg:h-[50px] h-[40px] gradient-outline flex">
                   <button
+                    type="button"
                     onClick={() =>
                       setNoOfQuestions(
                         noOfQuestions == 1 ? 1 : noOfQuestions - 1
@@ -110,6 +119,7 @@ const CreateGame = () => {
                     <p>{noOfQuestions}</p>
                   </div>
                   <button
+                    type="button"
                     onClick={() => setNoOfQuestions(noOfQuestions + 1)}
                     className="h-full w-[25%] flex justify-center items-center gradient-left"
                   >
@@ -119,12 +129,13 @@ const CreateGame = () => {
               </div>
             </div>
             <button
-              onClick={() => createGame()}
+              type="submit"
+              onClick={(e) => createGame(e)}
               className="font-[700] rounded-[10px] font-nunito text-[18px] text-[#fefefe] bg-custom p-[10px] lg:p-[20px] flex items-center justify-center gap-2"
             >
               Create Game {loading && <div className="loader"></div>}
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </Layout>

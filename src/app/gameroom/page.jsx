@@ -27,9 +27,7 @@ const GameRoom = () => {
     endGame();
   };
   const endGame = () => {
-    console.log("Here");
     if (moderator_Token) {
-      console.log("Mod token: ", moderator_Token);
       if (socketRef.current) {
         socketRef.current.send(
           JSON.stringify({
@@ -64,18 +62,13 @@ const GameRoom = () => {
       socketRef.current = socket;
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
-        
-        console.log(data);
-        
+
         if (data.message == "Game over") {
-          sessionStorage.clear();
+          sessionStorage.removeItem("moderator_token");
+          sessionStorage.removeItem("room_id");
           sessionStorage.setItem(
             "leaderboard",
             JSON.stringify(data.leaderboard)
-          );
-          sessionStorage.setItem(
-            "current_user",
-            JSON.stringify(data.current_user)
           );
           router.push("/gameroom/leaderboard");
         }
@@ -112,15 +105,8 @@ const GameRoom = () => {
     }
   };
 
-  // const goToPrevious = () => {
-  //   setAnswer("");
-
-  //   if (currentIndex > 0) {
-  //     setCurrentIndex(currentIndex - 1);
-  //   }
-  // };
-
-  const submitAnswer = () => {
+  const submitAnswer = (e) => {
+    e.preventDefault();
     if (answer && !isSubmitDisabled) {
       if (socketRef.current) {
         socketRef.current.send(
@@ -183,32 +169,6 @@ const GameRoom = () => {
                     <p className="font-nunito font-[400] text-[#fefefe] text-[20px]">
                       {questions[currentIndex].question}
                     </p>
-
-                    {/* <div className="flex justify-center gap-[40px] w-full mt-5">
-                      <button
-                        onClick={goToPrevious}
-                        disabled={currentIndex === 0}
-                        className={`px-4 py-2 rounded ${
-                          currentIndex === 0
-                            ? "bg-gray-300 cursor-not-allowed"
-                            : "bg-blue-500 text-white"
-                        }`}
-                      >
-                        <RxCaretLeft />
-                      </button>
-
-                      <button
-                        onClick={goToNext}
-                        disabled={currentIndex === questions.length - 1}
-                        className={`px-4 py-2 rounded ${
-                          currentIndex === questions.length - 1
-                            ? "bg-gray-300 cursor-not-allowed"
-                            : "bg-blue-500 text-white"
-                        }`}
-                      >
-                        <RxCaretRight />
-                      </button>
-                    </div> */}
                   </div>
                 ) : (
                   ""
@@ -220,7 +180,10 @@ const GameRoom = () => {
 
         <div className="h-1/2 mt-5 flex flex-col">
           <div className="flex-1 flex justify-center relative">
-            <div className="gradient-outline w-[60%] px-2 py-3 h-[60px] absolute bottom-5 flex justify-between items-center">
+            <form
+              onSubmit={(e) => submitAnswer(e)}
+              className="gradient-outline w-[60%] px-2 py-3 h-[60px] absolute bottom-5 flex justify-between items-center"
+            >
               <input
                 type="text"
                 className="w-[90%] bg-transparent font-fredoka text-[#9a9a9a]"
@@ -229,10 +192,14 @@ const GameRoom = () => {
                 onChange={(e) => setAnswer(e.target.value)}
               />
 
-              <button onClick={() => submitAnswer()} ref={sendBtnRef}>
+              <button
+                type="submit"
+                onClick={(e) => submitAnswer(e)}
+                ref={sendBtnRef}
+              >
                 <Image src={send_icon} className="w-[30px]" />
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
