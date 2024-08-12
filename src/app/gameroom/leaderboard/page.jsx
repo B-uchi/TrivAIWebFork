@@ -6,12 +6,13 @@ import React, { useEffect, useState } from "react";
 const Leaderboard = () => {
   const router = useRouter();
   const [leaderboard, setLeaderboard] = useState([]);
+  const [current_user, setCurrentUser] = useState("");
   useEffect(() => {
     if (typeof sessionStorage !== undefined) {
       const leaderboardd = JSON.parse(sessionStorage.getItem("leaderboard"));
-
+      const current_userr = JSON.parse(sessionStorage.getItem("current_user"));
       setLeaderboard(leaderboardd);
-
+      setCurrentUser(current_userr);
       return () => {
         sessionStorage.removeItem("username");
       };
@@ -39,9 +40,12 @@ const Leaderboard = () => {
                 <div className=" flex text-[#9a9a9a] font-nunito font-[400] text-[19px] gap-[15px]">
                   <p>{player.rank}.</p>
                   <p>{player.username}</p>
+                  {player.username == current_user ? (
+                    <p className="font-[600]">(You)</p>
+                  ) : null}
                 </div>
                 <div className="flex text-[#9a9a9a] font-fredoka font-[700] text-[19px]">
-                    <p>Score: {player.score}</p>
+                  <p>Score: {player.score}</p>
                 </div>
               </div>
             ))}

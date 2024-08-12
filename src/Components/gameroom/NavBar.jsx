@@ -6,6 +6,7 @@ import { IoBug } from "react-icons/io5";
 import { useState } from "react";
 import { RxCaretUp, RxEnter } from "react-icons/rx";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const NavBar = () => {
   const router = useRouter();
@@ -23,46 +24,50 @@ const NavBar = () => {
             <button title="Menu" onClick={() => setExpandMenu(!expandMenu)}>
               <HiMenu size={38} color="#fefefe" />
             </button>
-            <button
-              onClick={() => router.push("/create-a-game")}
-              title="Create a game"
-              className={`bg-[#000000] ${
-                expandMenu
-                  ? "gap-[10px] items-center"
-                  : "w-[32px] h-[32px] items-center"
-              } bg-opacity-[38%] rounded-full p-1 flex`}
-            >
-              <LuPlus
-                color="#fefefe"
-                size={19}
-                className={`${expandMenu ? "ml-2" : "mx-auto"}`}
-              />
-              {expandMenu && (
-                <p className="font-nunito font-[600] text-[20px] text-[#fefefe]">
-                  Create a game
-                </p>
-              )}
-            </button>
-            <button
-              title="Join a game"
-              onClick={() => router.push("/join-a-game")}
-              className={`bg-[#000000] ${
-                expandMenu
-                  ? "gap-[10px] items-center"
-                  : "w-[32px] h-[32px] items-center"
-              } bg-opacity-[38%] rounded-full p-1 flex`}
-            >
-              <RxEnter
-                color="#fefefe"
-                size={19}
-                className={`${expandMenu ? "ml-2" : "mx-auto"}`}
-              />
-              {expandMenu && (
-                <p className="font-nunito font-[600] text-[20px] text-[#fefefe]">
-                  Join a game
-                </p>
-              )}
-            </button>
+            <Link href={"/create-a-game"}>
+              <button
+                onClick={() => router.push("/create-a-game")}
+                title="Create a game"
+                className={`bg-[#000000] ${
+                  expandMenu
+                    ? "gap-[10px] items-center"
+                    : "w-[32px] h-[32px] items-center"
+                } bg-opacity-[38%] rounded-full p-1 flex`}
+              >
+                <LuPlus
+                  color="#fefefe"
+                  size={19}
+                  className={`${expandMenu ? "ml-2" : "mx-auto"}`}
+                />
+                {expandMenu && (
+                  <p className="font-nunito font-[600] text-[20px] text-[#fefefe]">
+                    Create a game
+                  </p>
+                )}
+              </button>
+            </Link>
+            <Link href={"/join-a-game"}>
+              <button
+                title="Join a game"
+                onClick={() => router.push("/join-a-game")}
+                className={`bg-[#000000] ${
+                  expandMenu
+                    ? "gap-[10px] items-center"
+                    : "w-[32px] h-[32px] items-center"
+                } bg-opacity-[38%] rounded-full p-1 flex`}
+              >
+                <RxEnter
+                  color="#fefefe"
+                  size={19}
+                  className={`${expandMenu ? "ml-2" : "mx-auto"}`}
+                />
+                {expandMenu && (
+                  <p className="font-nunito font-[600] text-[20px] text-[#fefefe]">
+                    Join a game
+                  </p>
+                )}
+              </button>
+            </Link>
           </div>
           {expandMenu && (
             <div className="mt-[60px]">

@@ -18,7 +18,7 @@ const CreateGame = () => {
     setLoading(true);
     if (category == "selectCategory") {
       setLoading(false);
-      return "Please select a valid category.";
+      return toast("Please select a valid category.")
     } else {
       try {
         const request = await fetch(
@@ -65,7 +65,7 @@ const CreateGame = () => {
             Customize your trivia game and invite players to join.
           </p>
         </div>
-        <div className="mt-8 gradient-outline lg:w-[800px] w-[90%] lg:p-[40px] p-[20px]">
+        <div className="mt-8 gradient-outline lg:w-[800px] w-[90%] lg:p-[20px] p-[20px] mb-[40px]">
           <h2 className="font-fredoka font-[500] text-[20px] lg:text-[25px] gradient-text text-center">
             Game Details
           </h2>
@@ -87,6 +87,7 @@ const CreateGame = () => {
                 <option value="Sport">Sport</option>
                 <option value="History">History</option>
                 <option value="Science">Science</option>
+                <option value="Computer Science">Computer Science</option>
               </select>
             </div>
             <div className="flex lg:flex-row flex-col lg:gap-0 gap-[32px] justify-between">

@@ -27,7 +27,9 @@ const GameRoom = () => {
     endGame();
   };
   const endGame = () => {
+    console.log("Here");
     if (moderator_Token) {
+      console.log("Mod token: ", moderator_Token);
       if (socketRef.current) {
         socketRef.current.send(
           JSON.stringify({
@@ -52,7 +54,6 @@ const GameRoom = () => {
         return router.push("/join-a-game");
       }
 
-
       setModeratorToken(sessionStorage.getItem("moderator_token"));
       const socket = new WebSocket(
         `wss://trivai-backend.onrender.com/gameroom/${room_id}/${username}${
@@ -63,18 +64,26 @@ const GameRoom = () => {
       socketRef.current = socket;
       socket.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
-
+        
+        console.log(data);
+        
         if (data.message == "Game over") {
+          sessionStorage.clear();
           sessionStorage.setItem(
             "leaderboard",
             JSON.stringify(data.leaderboard)
           );
+          sessionStorage.setItem(
+            "current_user",
+            JSON.stringify(data.current_user)
+          );
           router.push("/gameroom/leaderboard");
         }
+
         if (Array.isArray(data)) {
           setQuestions(data);
         } else {
-          setChat((prevChat) => [...prevChat, data.message]);
+          toast(data.message);
         }
       });
 
@@ -98,20 +107,18 @@ const GameRoom = () => {
   }, [questions]);
 
   const goToNext = () => {
-    setAnswer("");
-
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
 
-  const goToPrevious = () => {
-    setAnswer("");
+  // const goToPrevious = () => {
+  //   setAnswer("");
 
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+  //   if (currentIndex > 0) {
+  //     setCurrentIndex(currentIndex - 1);
+  //   }
+  // };
 
   const submitAnswer = () => {
     if (answer && !isSubmitDisabled) {
@@ -124,6 +131,11 @@ const GameRoom = () => {
           })
         );
         setAnswer("");
+        if (currentIndex === questions.length - 1) {
+          return toast("Last question");
+        } else {
+          goToNext();
+        }
       }
     } else {
       toast.error(isSubmitDisabled ? "Time's up!" : "An answer is required");
@@ -172,7 +184,7 @@ const GameRoom = () => {
                       {questions[currentIndex].question}
                     </p>
 
-                    <div className="flex justify-center gap-[40px] w-full mt-5">
+                    {/* <div className="flex justify-center gap-[40px] w-full mt-5">
                       <button
                         onClick={goToPrevious}
                         disabled={currentIndex === 0}
@@ -196,7 +208,7 @@ const GameRoom = () => {
                       >
                         <RxCaretRight />
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 ) : (
                   ""
@@ -206,27 +218,9 @@ const GameRoom = () => {
           </div>
         </div>
 
-        <div className="h-1/2 mt-5 flex flex-col justify-between">
-          <div className="h-[32vh] flex justify-center">
-            <div
-              ref={chatContainerRef}
-              className="w-[60%] h-full flex flex-col items-end py-5 gap-[15px] overflow-y-auto"
-            >
-              {chat &&
-                chat.map((message, index) => (
-                  <div className="flex items-center gap-2" key={index}>
-                    <Image src={questionIcon} className="w-[40px] h-[40px]" />
-
-                    <div className="text-[#9a9a9a] font-fredoka text-[18px] bg-[#232935] p-4 rounded-[12px]">
-                      {message}
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-
-          <div className="flex-1 flex justify-center items-center">
-            <div className="gradient-outline w-[60%] px-2 py-3 flex justify-between items-center">
+        <div className="h-1/2 mt-5 flex flex-col">
+          <div className="flex-1 flex justify-center relative">
+            <div className="gradient-outline w-[60%] px-2 py-3 h-[60px] absolute bottom-5 flex justify-between items-center">
               <input
                 type="text"
                 className="w-[90%] bg-transparent font-fredoka text-[#9a9a9a]"
@@ -235,7 +229,7 @@ const GameRoom = () => {
                 onChange={(e) => setAnswer(e.target.value)}
               />
 
-              <button onClick={submitAnswer} ref={sendBtnRef}>
+              <button onClick={() => submitAnswer()} ref={sendBtnRef}>
                 <Image src={send_icon} className="w-[30px]" />
               </button>
             </div>
