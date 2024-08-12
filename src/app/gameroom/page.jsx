@@ -14,18 +14,20 @@ const GameRoom = () => {
   const sendBtnRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
   const [answer, setAnswer] = useState("");
   const [chat, setChat] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [moderator_Token, setModeratorToken] = useState("");
   const socketRef = useRef(null);
+  // const [canSubmit, setCanSubmit] = useState(true);
   const chatContainerRef = useRef(null);
   const router = useRouter();
 
   const onCountdownEnd = () => {
-    setIsSubmitDisabled(true);
-    endGame();
+    // setCanSubmit(false);
+    // endGame();
   };
+
   const endGame = () => {
     if (moderator_Token) {
       if (socketRef.current) {
@@ -65,11 +67,14 @@ const GameRoom = () => {
 
         if (data.message == "Game over") {
           sessionStorage.removeItem("moderator_token");
+          const username = sessionStorage.getItem("username");
           sessionStorage.removeItem("room_id");
+          sessionStorage.setItem("current_user", username);
           sessionStorage.setItem(
             "leaderboard",
             JSON.stringify(data.leaderboard)
           );
+          sessionStorage.removeItem("username");
           router.push("/gameroom/leaderboard");
         }
 
@@ -106,8 +111,10 @@ const GameRoom = () => {
   };
 
   const submitAnswer = (e) => {
-    e.preventDefault();
-    if (answer && !isSubmitDisabled) {
+    if (e) {
+      e.preventDefault();
+    }
+    if (answer) {
       if (socketRef.current) {
         socketRef.current.send(
           JSON.stringify({
@@ -124,7 +131,7 @@ const GameRoom = () => {
         }
       }
     } else {
-      toast.error(isSubmitDisabled ? "Time's up!" : "An answer is required");
+      toast.error("An answer is required");
     }
   };
 
@@ -136,7 +143,7 @@ const GameRoom = () => {
             {moderator_Token && (
               <button
                 onClick={() => endGame()}
-                className="bg-red-600 font-fredoka font-[600] text-white rounded-[12px] px-2 py-3 mr-[10px]"
+                className="bg-red-600 flex items-center gap-2 font-fredoka font-[600] text-white rounded-[12px] px-2 py-3 mr-[10px]"
               >
                 End Game
               </button>

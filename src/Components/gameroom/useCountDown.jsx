@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 
-const useCountdown = (initialDuration) => {
+const useCountdown = (initialDuration, endFunction) => {
   const [time, setTime] = useState(initialDuration);
   const [isActive, setIsActive] = useState(false);
   const initialDurationRef = useRef(initialDuration);
@@ -28,6 +28,7 @@ const useCountdown = (initialDuration) => {
       }, 1000);
     } else if (time === 0) {
       clearInterval(interval);
+      endFunction()
       setIsActive(false); // Stop the countdown when time reaches 0
     }
 

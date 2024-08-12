@@ -1,7 +1,7 @@
 "use client";
 import { Layout } from "@/Components/gameroom";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const JoinGame = () => {
@@ -9,10 +9,12 @@ const JoinGame = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  if (typeof sessionStorage !== undefined) {
-    sessionStorage.clear();
-  }
-  
+  useEffect(() => {
+    if (typeof sessionStorage !== undefined) {
+      sessionStorage.clear();
+    }
+  }, []);
+
   const joinGame = (e) => {
     e.preventDefault();
     setLoading(true);

@@ -1,7 +1,7 @@
 "use client";
 import { Layout } from "@/Components/gameroom";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IoCaretBackCircleOutline,
   IoCaretForwardCircleOutline,
@@ -14,9 +14,11 @@ const CreateGame = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  if (typeof sessionStorage !== undefined) {
-    sessionStorage.clear();
-  }
+  useEffect(() => {
+    if (typeof sessionStorage !== undefined) {
+      sessionStorage.clear();
+    }
+  }, []);
 
   const createGame = async (e) => {
     e.preventDefault();

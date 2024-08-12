@@ -2,6 +2,7 @@
 import { Layout } from "@/Components/gameroom";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Leaderboard = () => {
   const router = useRouter();
@@ -10,16 +11,16 @@ const Leaderboard = () => {
   useEffect(() => {
     if (typeof sessionStorage !== undefined) {
       const leaderboardd = JSON.parse(sessionStorage.getItem("leaderboard"));
-      const current_userr = sessionStorage.getItem("username");
+      const current_userr = sessionStorage.getItem("current_user");
       setLeaderboard(leaderboardd);
       setCurrentUser(current_userr);
-      console.log(current_userr)
-      // return () => {
-      //   sessionStorage.removeItem("username");
-      // };
+
+      if (!leaderboardd) {
+        toast.error("Failed to display leaderboard")
+        return router.push("/join-a-game");
+      }
     }
   }, [router]);
-
 
   return (
     <Layout>
